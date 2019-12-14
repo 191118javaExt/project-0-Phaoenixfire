@@ -1,0 +1,18 @@
+2019-12-11 22:33:34 WARN  ConnectionUtil:39 - Unable to obtain connection to database
+java.sql.SQLException: No suitable driver found for jdbc:postgresql://localhost:5432/
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at com.revature.util.ConnectionUtil.getConnection(ConnectionUtil.java:37)
+	at com.revature.repositories.EmployeeDAOImpl.insert(EmployeeDAOImpl.java:82)
+	at com.revature.services.EmployeeService.insert(EmployeeService.java:23)
+	at com.revature.main.CreateAccount.createAccount(CreateAccount.java:20)
+	at com.revature.main.HaveAccount.haveAccount(HaveAccount.java:43)
+	at com.revature.main.Driver.main(Driver.java:8)
+2019-12-12 09:40:02 WARN  Login:32 - Unable to find Username
+2019-12-12 09:41:15 WARN  Login:34 - Unable to find Username
+2019-12-12 09:44:26 WARN  Login:34 - Unable to find Username
+2019-12-12 09:44:55 WARN  Login:34 - Unable to find Username
+2019-12-12 09:47:00 WARN  Login:34 - Unable to find Username
+2019-12-12 09:49:04 WARN  Login:34 - Unable to find Username
+2019-12-12 09:51:32 WARN  Login:34 - Unable to find Username
+2019-12-12 09:52:30 WARN  Login:35 - Unable to find Username
