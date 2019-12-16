@@ -39,7 +39,11 @@ public class ConnectionUtil {
 		} catch (SQLException e) {
 			logger.warn("Unable to obtain connection to database", e);
 		}
-		
+		try {
+			conn.setSchema("project0");
+		} catch (SQLException e) {
+			logger.warn("Unable to set Schema to project0");
+		}
 		return conn;
 	}
 }

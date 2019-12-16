@@ -11,114 +11,83 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.revature.models.Employee;
+import com.revature.models.User;
 import com.revature.util.ConnectionUtil;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-	
+
 	private static Logger logger = Logger.getLogger(EmployeeDAOImpl.class);
-	
+
 	@Override
 	public List<Employee> findAll() {
-		
+
 		List<Employee> list = new ArrayList<>();
-		List<Integer> supervisors = new ArrayList<>();
-		
+
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			
-			// This String represents the SQL which we will execute on our database
-			String sql = "SELECT * FROM employee;";
-			
-			// This Statement object is a wrapper around our SQL string
-			// And is obtained through our connection to the database
+
+			String sql = "SELECT * FROM users;";
 			Statement stmt = conn.createStatement();
-			
 			ResultSet rs = stmt.executeQuery(sql);
-			
-			// ResultSets start 1 position behind the starting point
-			// So, in order to access the first value, we invoke next to start
-			// This is a small difference, the only thing is that it simplifies
-			// our syntax. Since we can use a while loop instead of a do-while loop
-			while(rs.next()) {
+
+			while (rs.next()) {
 				int id = rs.getInt("emp_id");
 				String first_name = rs.getString("first_name");
 				String last_name = rs.getString("last_name");
-				String email = rs.getString("email");
-				double salary = rs.getDouble("salary");
-				
-				Employee e = new Employee(id, first_name, last_name, email, salary, null);
-				int sup_id = rs.getInt("supervisor");
-				
+				String user_name = rs.getString("user_name");
+				int user_password = rs.getInt("user_password");
+				boolean user_employee = rs.getBoolean("is_employee");
+				boolean user_admin = rs.getBoolean("is_admin");
+				Employee e = new Employee(id, user_name, user_password, first_name, last_name, user_employee,
+						user_admin);
 				list.add(e);
-				supervisors.add(sup_id);
 			}
-			
+
 			rs.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			logger.warn("Unable to retrieve all users", e);
 		}
-		
-		for(int i = 0; i < list.size(); i++) {
-			int sup_id = supervisors.get(i);
-			
-			// Find Employee that matches supervisor id
-			for(Employee e: list) {
-				if(e.getId() == sup_id) {
-					list.get(i).setSupervisor(e);
-				}
-			}
-		}
-		
 		return list;
+
 	}
 
 	@Override
-	public Employee findById(int id) {
+	public User findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public boolean insert(Employee e) {
-		try (Connection conn = ConnectionUtil.getConnection()) {
-			
-			// This String represents the SQL which we will execute on our database
-			// We use ?'s as placeholders, which we can insert values from Java using
-			// PreparedStatements
-			String sql = "INSERT INTO employee (first_name, last_name, email, salary, supervisor) " +
-					"VALUES (?, ?, ?, ?, ?);";
-			
-			// This PreparedStatement object is a wrapper around our SQL string
-			// And is obtained through our connection to the database
-			// And allows us to insert into the placeholders
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, e.getFirst_name());
-			stmt.setString(2, e.getLast_name());
-			stmt.setString(3, e.getEmail());
-			stmt.setDouble(4, e.getSalary());
-			Employee sup = e.getSupervisor();
-			
-			if(sup != null) {
-				stmt.setInt(5, sup.getId());
+//	@Override
+//	public boolean insert(User e) {
+//		try (Connection conn = ConnectionUtil.getConnection()) {
+//
+//			String sql = "INSERT INTO users (first_name, last_name, email, salary, supervisor) "
+//					+ "VALUES (?, ?, ?, ?, ?);";
+//
+//			PreparedStatement stmt = conn.prepareStatement(sql);
+//			stmt.setString(1, e.getFirst_name());
+//			stmt.setString(2, e.getLast_name());
+//
+//			if (!stmt.execute()) {
+//				return false;
+//			}
+//		} catch (SQLException ex) {
+//			logger.warn("Unable to retrieve all users", ex);
+//			return false;
+//		}
+//
+//		return true;
+//	}
 
-			} else {
-				stmt.setNull(5, java.sql.Types.INTEGER);
-			}
-			
-			if(!stmt.execute()) {
-				return false;
-			}
-		} catch(SQLException ex) {
-			logger.warn("Unable to retrieve all users", ex);
-			return false;
-		}
+	@Override
+	public boolean approveAccount(User e) {
+
 		
-		return true;
-	}
-
-	@Override
-	public boolean update(Employee e) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
+	public boolean denyAccount(User e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

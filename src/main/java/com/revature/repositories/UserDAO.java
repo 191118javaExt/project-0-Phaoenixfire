@@ -1,14 +1,13 @@
 package com.revature.repositories;
 
-import java.util.List;
-
-import com.revature.models.Employee;
 import com.revature.models.User;
 
 public interface UserDAO {
 
-	public int deposit();
-	public int withdrawal();
-	public int transfer();
+	public boolean deposit();
+	public boolean withdrawal();
+	public boolean transfer();
 	public boolean closeAccount();
+	public boolean createUser(User u);
+	boolean createAccount();
 }

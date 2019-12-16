@@ -4,20 +4,38 @@ public class User {
 
 	private int id;
 	private String user_name;
+	private int user_password;
 	private String first_name;
 	private String last_name;
 	private boolean is_employee;
 	private boolean is_admin;
 	
-	
-	public User(int id, String user_name, String first_name, String last_name, boolean is_employee, boolean is_admin) {
+	public User(int id, String user_name, int user_password, String first_name, String last_name,
+			boolean is_employee, boolean is_admin) {
 		super();
 		this.id = id;
 		this.user_name = user_name;
+		this.user_password = user_password;
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.is_employee = is_employee;
 		this.is_admin = is_admin;
+	}
+	public User(String user_name, int user_password, String first_name, String last_name) {
+		super();
+
+		this.user_name = user_name;
+		this.user_password = user_password;
+		this.first_name = first_name;
+		this.last_name = last_name;
+	
+	}
+	public void setUser_password(int user_password) {
+		this.user_password = user_password;
+	}
+	
+	public int getUser_password() {
+		return user_password;
 	}
 	public User() {
 		super();
@@ -59,6 +77,8 @@ public class User {
 	public void setIs_admin(boolean is_admin) {
 		this.is_admin = is_admin;
 	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,6 +89,7 @@ public class User {
 		result = prime * result + (is_employee ? 1231 : 1237);
 		result = prime * result + ((last_name == null) ? 0 : last_name.hashCode());
 		result = prime * result + ((user_name == null) ? 0 : user_name.hashCode());
+		result = prime * result + user_password;
 		return result;
 	}
 	@Override
@@ -101,13 +122,15 @@ public class User {
 				return false;
 		} else if (!user_name.equals(other.user_name))
 			return false;
+		if (user_password != other.user_password)
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", user_name=" + user_name + ", first_name=" + first_name + ", last_name=" + last_name
-				+ ", is_employee=" + is_employee + ", is_admin=" + is_admin + "]";
+		return "User [id=" + id + ", user_name=" + user_name + ", user_password=" + user_password + ", first_name="
+				+ first_name + ", last_name=" + last_name + ", is_employee=" + is_employee + ", is_admin=" + is_admin
+				+ "]";
 	}
-
 	
 }

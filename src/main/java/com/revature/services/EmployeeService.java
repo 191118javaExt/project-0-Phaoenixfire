@@ -19,8 +19,5 @@ public class EmployeeService {
 	public List<Employee> findAll() {
 		return repository.findAll();
 	}
-	
-	public boolean insert(Employee e) {
-		return repository.insert(e);
-	}
+
 }

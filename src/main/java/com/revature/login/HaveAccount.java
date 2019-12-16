@@ -30,7 +30,6 @@ public class HaveAccount {
 			break;
 
 		case 1: // Call to login class.
-			System.out.println("case 1");
 			Login.loginAccount();
 //			for (Account n : accounts) {
 //				Login.loginAccount();
@@ -38,7 +37,6 @@ public class HaveAccount {
 			break;
 
 		case 2: // Call to create account
-			System.out.println("case 2");
 			CreateAccount.createAccount();
 //			accounts.add(newAccount);
 			haveAccount();
