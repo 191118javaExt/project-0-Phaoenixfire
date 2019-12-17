@@ -8,7 +8,10 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import com.revature.login.Login;
+import com.revature.AdminLoggedIn;
+import com.revature.EmployeeLoggedIn;
+import com.revature.Login;
+import com.revature.UserLoggedIn;
 import com.revature.models.User;
 import com.revature.util.ConnectionUtil;
 
@@ -17,23 +20,17 @@ public class UserDAOImpl implements UserDAO {
 	private static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
 	@Override
-	public boolean deposit() {
+	public boolean deposit(int deposit,String accountType, String username) {
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
 			String sql;
-			System.out.println("How much would you like to deposit?");
-			Scanner sc = new Scanner(System.in);
-			String depositAmt = sc.nextLine();
-			int depositInt = Integer.parseInt(depositAmt);
-			System.out.println("What account would you like to deposit to Checking/Savings");
-			String accountType = sc.nextLine();
 			sql = "Update accounts set account_balance = account_balance + ? FROM users "
 					+ " where owner_id = users.user_id AND accounts.account_type = ?" + " AND users.user_name = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, depositInt);
+			stmt.setInt(1, deposit);
 			stmt.setString(2, accountType);
-			stmt.setString(3, Login.getLogin_name());
+			stmt.setString(3, username);
 			if (!stmt.execute()) {
 				return false;
 			}
@@ -47,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean withdrawal() {
+	public boolean withdrawal(int withdraw,String accountType, String username) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
 			int account_balance = 0;
@@ -55,31 +52,23 @@ public class UserDAOImpl implements UserDAO {
 					+ " accounts.account_type from users INNER JOIN accounts "
 					+ "On user_id = owner_id WHERE user_name= ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, Login.getLogin_name());
+			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				account_balance = rs.getInt("account_balance");
 			}
-			System.out.println("How much would you like to withdraw?");
-			Scanner sc = new Scanner(System.in);
-			String withdrawal = sc.nextLine();
-			System.out.println(Integer.parseInt(withdrawal));
-			System.out.println(account_balance);
 
-			if (Integer.parseInt(withdrawal) > account_balance) {
+			if (withdraw > account_balance) {
 				System.out.println("Cannot Process, exceeds current funds");
 				return false;
 			} else {
 
-				int withdrawalInt = Integer.parseInt(withdrawal);
-				System.out.println("What account would you like to withdraw from Checking/Savings");
-				String accountType = sc.nextLine();
 				sql = "Update accounts set account_balance = account_balance - ? FROM users "
 						+ " where owner_id = users.user_id AND accounts.account_type = ?" + " AND users.user_name = ?";
 				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, withdrawalInt);
+				stmt.setInt(1, withdraw);
 				stmt.setString(2, accountType);
-				stmt.setString(3, Login.getLogin_name());
+				stmt.setString(3, username);
 				if (!stmt.execute()) {
 					return false;
 				}
@@ -172,12 +161,6 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean closeAccount() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean createUser(User u) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
@@ -211,22 +194,106 @@ public class UserDAOImpl implements UserDAO {
 			String accountType = sc.nextLine();
 			System.out.println("How much would you like for you initial deposit to be?");
 			String initialDeposit = sc.nextLine();
-			String sql = "Insert INTO accounts(owner_id, account_balance, account_type)" + 
-					"VALUES((SELECT user_id from users where user_name = ?),?, ?);";
+			String sql = "Insert INTO accounts(owner_id, account_balance, account_type)"
+					+ "VALUES((SELECT user_id from users where user_name = ?),?, ?);";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, Login.getLogin_name());
-			stmt.setInt(2,Integer.parseInt(initialDeposit));
+			stmt.setInt(2, Integer.parseInt(initialDeposit));
 			stmt.setString(3, accountType);
-			
-			if(!stmt.execute()) {
-				return false;
-			}
+
+			stmt.execute();
 			System.out.println("Account created. Awaiting administrator approval.");
-		}
-		catch(SQLException e){
+			UserLoggedIn.loggedIn();
+		} catch (SQLException e) {
 			logger.warn("Jee Wilikers Batman we're not gonna pass", e);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean logIn(String username, int password) {
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "select * from users WHERE user_name = ? AND user_password = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setInt(2, password);
+			ResultSet rs = stmt.executeQuery();
+			int attemptedPass = 0;
+			while (rs.next()) {
+				attemptedPass = rs.getInt("user_password");
+			}
+			if (attemptedPass == password) {
+				System.out.println("you are now logged in");
+				Login.setLogin_name(username);
+				employeeCheck();
+				UserLoggedIn.loggedIn();
+			} else if (attemptedPass != password) {
+				System.out.println("Login failed.");
+				Login.loginAccount();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			logger.warn("Unable to find Account", e);
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean employeeCheck() {
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			
+			String sql = "Select * from users where user_name = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, Login.getLogin_name());
+			ResultSet rs =  stmt.executeQuery();
+			boolean is_admin = false;
+			boolean is_employee = false;
+			while(rs.next()) {
+				is_employee = rs.getBoolean("is_employee");
+				is_admin = rs.getBoolean("is_admin");		
+			}
+			
+			if(is_admin == true) {
+				System.out.println("Admin logged in");
+				AdminLoggedIn.loggedIn();
+			}
+			else if(is_employee == true) {
+				System.out.println("Employee logged in");
+				EmployeeLoggedIn.loggedIn();
+			}else {
+				UserLoggedIn.loggedIn();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false;
 	}
 
+	@Override
+	public boolean accountApproved(String username, String account_type) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+		String sql = "Select account_approved from accounts inner join users on users.user_id = accounts.owner_id where user_name = ? and account_type = ?;";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, username);
+		stmt.setString(2, account_type);
+		ResultSet rs =  stmt.executeQuery();
+		boolean isApproved = false;
+		while(rs.next()) {
+			isApproved = rs.getBoolean("account_approved");
+		}
+		return isApproved;
+		
+	} catch (SQLException e) {
+		logger.warn("Something went wrong", e);
+	}
+		return false;
+	}
 }

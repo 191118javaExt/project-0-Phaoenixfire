@@ -1,4 +1,4 @@
-package com.revature.login;
+package com.revature;
 
 import java.util.Scanner;
 

@@ -8,12 +8,12 @@ public class UserService {
 
 	UserDAO repository = new UserDAOImpl();
 
-	public boolean deposit() {
-		return repository.deposit();
+	public boolean deposit(int deposit,String accountType, String username) {
+		return repository.deposit(deposit,accountType,username);
 	}
 
-	public boolean withdrawal() {
-		return repository.withdrawal();
+	public boolean withdrawal(int withdraw,String accountType, String username) {
+		return repository.withdrawal(withdraw,accountType,username);
 
 	}
 
@@ -28,5 +28,10 @@ public class UserService {
 	public boolean createUser(User u) {
 		return repository.createUser(u);
 	}
-
+	public boolean logIn(String userName, int password) {
+		return repository.logIn(userName, password);
+	}
+	public boolean accountApproved(String username, String account_type) {
+		return repository.accountApproved(username,account_type);
+	}
 }

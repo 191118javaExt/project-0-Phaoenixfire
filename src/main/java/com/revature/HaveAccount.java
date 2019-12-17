@@ -1,4 +1,4 @@
-package com.revature.login;
+package com.revature;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -31,9 +31,7 @@ public class HaveAccount {
 
 		case 1: // Call to login class.
 			Login.loginAccount();
-//			for (Account n : accounts) {
-//				Login.loginAccount();
-//			}
+
 			break;
 
 		case 2: // Call to create account

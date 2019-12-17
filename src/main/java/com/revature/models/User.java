@@ -41,6 +41,17 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public User(int user_id, String user_name2, String first_name2, String last_name2, boolean is_employee2,
+			boolean is_admin2) {
+		super();
+		this.id = user_id;
+		this.user_name = user_name2;
+		this.first_name = first_name2;
+		this.last_name = last_name2;
+		this.is_employee = is_employee2;
+		this.is_admin = is_admin2;
+	
+	}
 	public int getId() {
 		return id;
 	}

@@ -2,7 +2,9 @@ package com.revature.services;
 
 import java.util.List;
 
+
 import com.revature.models.Employee;
+import com.revature.models.User;
 import com.revature.repositories.EmployeeDAO;
 import com.revature.repositories.EmployeeDAOImpl;
 
@@ -10,14 +12,18 @@ public class EmployeeService {
 	
 	EmployeeDAO repository = new EmployeeDAOImpl();
 
-	/**
-	 * This is a very simple method, that doesn't add in any extra logic
-	 * It simply uses what was grabbed from the database through the DAO
-	 * @return
-	 */
-	
 	public List<Employee> findAll() {
 		return repository.findAll();
+	}
+	public User findByUserName(String username) {
+		return repository.findByUserName(username);
+	}
+	
+	public boolean approveAccount(int user_id, String account_type) {
+		return repository.approveAccount(user_id, account_type);
+	}
+	public boolean denyAccount(int user_id, String account_type) {
+		return  repository.denyAccount(user_id, account_type);
 	}
 
 }
