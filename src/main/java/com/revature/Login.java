@@ -7,6 +7,14 @@ import com.revature.services.UserService;
 public class Login {
 
 	private static String login_name;
+	private static int login_id;
+	public static int getLogin_id() {
+		return login_id;
+	}
+
+	public static void setLogin_id(int login_id) {
+		Login.login_id = login_id;
+	}
 
 	public static String getLogin_name() {
 		return login_name;

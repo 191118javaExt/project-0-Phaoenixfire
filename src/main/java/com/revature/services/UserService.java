@@ -17,8 +17,8 @@ public class UserService {
 
 	}
 
-	public boolean transfer() {
-		return repository.transfer();
+	public boolean transfer(String account_type, String user_name, int transferAmt) {
+		return repository.transfer(account_type,user_name, transferAmt);
 	}
 
 	public boolean createAccount() {
@@ -33,5 +33,11 @@ public class UserService {
 	}
 	public boolean accountApproved(String username, String account_type) {
 		return repository.accountApproved(username,account_type);
+	}
+	public User updateUser(User u) {
+		return repository.updateUser(u);
+	}
+	public boolean checkFunds(String account_type,String user_name, int withdraw) {
+		return repository.checkFunds(account_type,user_name, withdraw);
 	}
 }

@@ -9,7 +9,6 @@ import com.revature.models.User;
 public interface EmployeeDAO{
 
 	public List<Employee> findAll();
-
 	public boolean approveAccount(int user_id, String account_type);
 	public boolean denyAccount(int user_id, String account_type);
 	User findByUserName(String username);

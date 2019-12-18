@@ -213,3 +213,72 @@ org.postgresql.util.PSQLException: ERROR: column "user_name" does not exist
 	at com.revature.Login.loginAccount(Login.java:28)
 	at com.revature.HaveAccount.haveAccount(HaveAccount.java:33)
 	at com.revature.Driver.main(Driver.java:8)
+2019-12-17 10:21:33 WARN  UserDAOImpl:138 - Jee Wilikers Batman we're not gonna pass
+org.postgresql.util.PSQLException: No results were returned by the query.
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:109)
+	at com.revature.repositories.UserDAOImpl.transfer(UserDAOImpl.java:124)
+	at com.revature.services.UserService.transfer(UserService.java:21)
+	at com.revature.UserLoggedIn.loggedIn(UserLoggedIn.java:59)
+	at com.revature.repositories.UserDAOImpl.employeeCheck(UserDAOImpl.java:251)
+	at com.revature.repositories.UserDAOImpl.logIn(UserDAOImpl.java:213)
+	at com.revature.services.UserService.logIn(UserService.java:32)
+	at com.revature.Login.loginAccount(Login.java:36)
+	at com.revature.HaveAccount.haveAccount(HaveAccount.java:33)
+	at com.revature.Driver.main(Driver.java:8)
+2019-12-17 10:22:39 WARN  UserDAOImpl:138 - Jee Wilikers Batman we're not gonna pass
+org.postgresql.util.PSQLException: No results were returned by the query.
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:109)
+	at com.revature.repositories.UserDAOImpl.transfer(UserDAOImpl.java:124)
+	at com.revature.services.UserService.transfer(UserService.java:21)
+	at com.revature.UserLoggedIn.loggedIn(UserLoggedIn.java:59)
+	at com.revature.repositories.UserDAOImpl.employeeCheck(UserDAOImpl.java:251)
+	at com.revature.repositories.UserDAOImpl.logIn(UserDAOImpl.java:213)
+	at com.revature.services.UserService.logIn(UserService.java:32)
+	at com.revature.Login.loginAccount(Login.java:36)
+	at com.revature.HaveAccount.haveAccount(HaveAccount.java:33)
+	at com.revature.Driver.main(Driver.java:8)
+2019-12-17 13:07:37 WARN  UserDAOImpl:263 - Something went wrong
+org.postgresql.util.PSQLException: ERROR: operator does not exist: integer = character varying
+  Hint: No operator matches the given name and argument types. You might need to add explicit type casts.
+  Position: 175
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2505)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2241)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:310)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:447)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:368)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:158)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:108)
+	at com.revature.repositories.UserDAOImpl.checkFunds(UserDAOImpl.java:252)
+	at com.revature.services.UserService.checkFunds(UserService.java:41)
+	at com.revature.AdminLoggedIn.loggedIn(AdminLoggedIn.java:69)
+	at com.revature.AdminLoggedIn.loggedIn(AdminLoggedIn.java:76)
+	at com.revature.repositories.UserDAOImpl.employeeCheck(UserDAOImpl.java:185)
+	at com.revature.repositories.UserDAOImpl.logIn(UserDAOImpl.java:152)
+	at com.revature.services.UserService.logIn(UserService.java:32)
+	at com.revature.Login.loginAccount(Login.java:36)
+	at com.revature.HaveAccount.haveAccount(HaveAccount.java:33)
+	at com.revature.Driver.main(Driver.java:9)
+2019-12-17 14:32:36 WARN  UserDAOImpl:263 - Something went wrong
+org.postgresql.util.PSQLException: ERROR: operator does not exist: integer = character varying
+  Hint: No operator matches the given name and argument types. You might need to add explicit type casts.
+  Position: 175
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2505)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2241)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:310)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:447)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:368)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:158)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:108)
+	at com.revature.repositories.UserDAOImpl.checkFunds(UserDAOImpl.java:252)
+	at com.revature.services.UserService.checkFunds(UserService.java:41)
+	at com.revature.AdminLoggedIn.loggedIn(AdminLoggedIn.java:69)
+	at com.revature.AdminLoggedIn.loggedIn(AdminLoggedIn.java:76)
+	at com.revature.repositories.UserDAOImpl.employeeCheck(UserDAOImpl.java:185)
+	at com.revature.repositories.UserDAOImpl.logIn(UserDAOImpl.java:152)
+	at com.revature.services.UserService.logIn(UserService.java:32)
+	at com.revature.Login.loginAccount(Login.java:36)
+	at com.revature.HaveAccount.haveAccount(HaveAccount.java:33)
+	at com.revature.Driver.main(Driver.java:9)
+2019-12-17 14:47:55 INFO  UserDAOImpl:42 - 500 was added to temp1's Checking account
+2019-12-17 14:48:33 INFO  UserDAOImpl:64 - 500 was removed from temp1's Checking account
+2019-12-17 14:48:33 INFO  UserDAOImpl:42 - 500 was added to temp1's Savings account

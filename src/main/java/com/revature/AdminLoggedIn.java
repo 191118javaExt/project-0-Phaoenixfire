@@ -32,31 +32,45 @@ public class AdminLoggedIn {
 			System.out.println("How much would you like to deposit?");
 			String depositAmt = sc.nextLine();
 			int depositInt = Integer.parseInt(depositAmt);
-			System.out.println("What account would you like to deposit to Checking/Savings");
+			System.out.println("What account would you like to deposit to Checking/Savings?");
 			String accountType = sc.nextLine();
 			System.out.println("What username are you depositing into today?");
 			String userName = sc.nextLine();
-			us.deposit(depositInt,accountType,userName);
+			us.deposit(depositInt, accountType, userName);
 			loggedIn();
 			break;
 
 		case "2":
-			System.out.println("How much would you like to withdraw?");
-			String withdrawAmt = sc.nextLine();
-			int withdraw = Integer.parseInt(withdrawAmt);
-			System.out.println("What account would you like to withdraw from Checking/Savings");
+			System.out.println("What account would you like to withdraw from Checking/Savings?");
 			accountType = sc.nextLine();
-			System.out.println("What username are you withdrawing from today?");
-			userName = sc.nextLine();
-			us.withdrawal(withdraw,accountType, userName);
-			loggedIn();
+			if (us.accountApproved(Login.getLogin_name(), accountType) == true) {
+				System.out.println("How much would you like to withdraw?");
+				String withdrawAmt = sc.nextLine();
+				int withdraw = Integer.parseInt(withdrawAmt);
+				System.out.println("What username are you trying to withdraw from?");
+				String accountUser = sc.nextLine();
+				if (us.checkFunds(accountType, accountUser, withdraw) == true) {
+					us.withdrawal(withdraw, accountType, Login.getLogin_name());
+				}
+				loggedIn();
+			} else {
+				System.out.println("Account Still pending approval. Check back later.");
+				loggedIn();
+			}
 			break;
 
 		case "3":
-			us.transfer();
+			System.out.println("Which account are you transfering from Checking/Savings?");
+			accountType = sc.nextLine();
+			System.out.println("How much would you like to transfer?");
+			String transferAmt = sc.nextLine();
+			System.out.println("What username are you trying to transfer funds from?");
+			String accountUser = sc.nextLine();
+			if (us.checkFunds(accountType, accountUser, Integer.parseInt(transferAmt)) == true) {
+				us.transfer(accountType, accountUser, Integer.parseInt(transferAmt));
+			}
 			loggedIn();
 			break;
-
 		case "4":
 			es.findAll();
 			loggedIn();
@@ -94,7 +108,9 @@ public class AdminLoggedIn {
 			break;
 
 		case "9":
-			System.exit(0);
+			System.out.println("Goodbye " + Login.getLogin_name());
+			Login.setLogin_name(null);
+			HaveAccount.haveAccount();
 			break;
 		}
 	}
