@@ -25,14 +25,10 @@ public class UserLoggedIn {
 		switch (userInput) {
 
 		case "1":
-			System.out.println("What account would you like to deposit to Checking/Savings");
-			String accountType = sc.nextLine();
+			String accountType = CheckAccountType.checkAccountType();
 			if (us.accountApproved(Login.getLogin_name(), accountType) == true) {
-				System.out.println("How much would you like to deposit?");
-				String depositAmt = sc.nextLine();
-				int depositInt = Integer.parseInt(depositAmt);
-
-				us.deposit(depositInt, accountType, Login.getLogin_name());
+				int depositAmt = userInputs.getNumber("deposit");
+				us.deposit(depositAmt, accountType, Login.getLogin_name());
 				loggedIn();
 			} else {
 				System.out.println("Account Still pending approval. Check back later.");
@@ -41,15 +37,12 @@ public class UserLoggedIn {
 			break;
 
 		case "2":
-			System.out.println("What account would you like to withdraw from Checking/Savings");
-			accountType = sc.nextLine();
+			accountType = CheckAccountType.checkAccountType();
 			if (us.accountApproved(Login.getLogin_name(), accountType) == true) {
-				System.out.println("How much would you like to withdraw?");
-				String withdrawAmt = sc.nextLine();
-				int withdraw = Integer.parseInt(withdrawAmt);
-				if(us.checkFunds(accountType,Login.getLogin_name(), withdraw) == true) {
-				us.withdrawal(withdraw, accountType, Login.getLogin_name());
-				
+				int withdraw = userInputs.getNumber("withdrawakl");
+				if (us.checkFunds(accountType, Login.getLogin_name(), withdraw) == true) {
+					us.withdrawal(withdraw, accountType, Login.getLogin_name());
+
 				}
 				loggedIn();
 			} else {
@@ -59,12 +52,15 @@ public class UserLoggedIn {
 			break;
 
 		case "3":
-			System.out.println("Which account are you transfering from Checking/Savings?");
-			accountType = sc.nextLine();
-			System.out.println("How much would you like to transfer?");
-			String transferAmt = sc.nextLine();
-			if(us.checkFunds(accountType,Login.getLogin_name(),Integer.parseInt(transferAmt))== true) {
-			us.transfer(accountType,Login.getLogin_name(),Integer.parseInt(transferAmt));
+			accountType = CheckAccountType.checkAccountType();
+			if (us.accountApproved(Login.getLogin_name(), accountType) == true) {
+				int transferAmt = userInputs.getNumber("transfer");
+				if (us.checkFunds(accountType, Login.getLogin_name(), transferAmt) == true) {
+					us.transfer(accountType, Login.getLogin_name(), transferAmt);
+				}
+			} else {
+				System.out.println("Account Still pending approval. Check back later.");
+				loggedIn();
 			}
 			loggedIn();
 			break;
@@ -87,7 +83,7 @@ public class UserLoggedIn {
 			us.updateUser(u);
 			loggedIn();
 			break;
-			
+
 		case "6":
 			System.out.println("Goodbye " + Login.getLogin_name());
 			Login.setLogin_name(null);

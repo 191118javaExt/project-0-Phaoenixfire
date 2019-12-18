@@ -282,3 +282,6 @@ org.postgresql.util.PSQLException: ERROR: operator does not exist: integer = cha
 2019-12-17 14:47:55 INFO  UserDAOImpl:42 - 500 was added to temp1's Checking account
 2019-12-17 14:48:33 INFO  UserDAOImpl:64 - 500 was removed from temp1's Checking account
 2019-12-17 14:48:33 INFO  UserDAOImpl:42 - 500 was added to temp1's Savings account
+2019-12-18 05:30:05 INFO  UserDAOImpl:42 - 500 was added to temp1's Checking account
+2019-12-18 05:30:47 INFO  UserDAOImpl:42 - 500 was added to temp1's Checking account
+2019-12-18 06:37:58 INFO  UserDAOImpl:42 - 500 was added to temp1's Checking account

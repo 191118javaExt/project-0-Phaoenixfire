@@ -2,7 +2,7 @@ package com.revature;
 
 import java.util.Scanner;
 
-public class userInputs {
+public class adminInputs {
 
 	public static int getNumber(String transactionType) {
 		Scanner sc = new Scanner(System.in);
@@ -15,7 +15,7 @@ public class userInputs {
 			userInput = sc.nextLine().trim();
 			System.out.println(userInput);
 			if (userInput.equals("exit")) {
-				UserLoggedIn.loggedIn();
+				AdminLoggedIn.loggedIn();
 			} else {
 				for (int i = 1; i < userInput.length(); i++) {
 					if (Character.isDigit(i)) {
@@ -34,7 +34,7 @@ public class userInputs {
 			System.out.println("Please enter the number you are trying to withdraw. Or type exit to quit");
 			userInput = sc.nextLine().trim();
 			if (userInput.equals("exit")) {
-				UserLoggedIn.loggedIn();
+				AdminLoggedIn.loggedIn();
 			} else {
 				for (int i = 0; i < userInput.length(); i++) {
 					if (Character.isDigit(i)) {
@@ -48,11 +48,11 @@ public class userInputs {
 			}
 
 		}
-		case "transaction": {
+		case "transfer": {
 			System.out.println("Please enter the number you are trying to transfer. Or type exit to quit");
 			userInput = sc.nextLine().trim();
 			if (userInput.equals("exit")) {
-				UserLoggedIn.loggedIn();
+				AdminLoggedIn.loggedIn();
 			} else {
 				for (int i = 0; i < userInput.length(); i++) {
 					if (Character.isDigit(i)) {

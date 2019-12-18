@@ -9,6 +9,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import com.revature.AdminLoggedIn;
+import com.revature.CheckAccountType;
 import com.revature.EmployeeLoggedIn;
 import com.revature.Login;
 import com.revature.UserLoggedIn;
@@ -111,8 +112,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean createAccount() {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("What kind of account would you like to make today Checking or Savings");
-			String accountType = sc.nextLine();
+			String accountType = CheckAccountType.checkAccountType();
 			System.out.println("How much would you like for you initial deposit to be?");
 			String initialDeposit = sc.nextLine();
 			String sql = "Insert INTO accounts(owner_id, account_balance, account_type)"

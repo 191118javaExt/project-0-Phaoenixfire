@@ -29,24 +29,19 @@ public class AdminLoggedIn {
 		switch (userInput) {
 
 		case "1":
+			String accountType = CheckAccountType.checkAccountType();
 			System.out.println("How much would you like to deposit?");
-			String depositAmt = sc.nextLine();
-			int depositInt = Integer.parseInt(depositAmt);
-			System.out.println("What account would you like to deposit to Checking/Savings?");
-			String accountType = sc.nextLine();
-			System.out.println("What username are you depositing into today?");
+			int depositAmt = adminInputs.getNumber("deposit");
+			System.out.println("What username are you trying to withdraw from?");
 			String userName = sc.nextLine();
-			us.deposit(depositInt, accountType, userName);
+			us.deposit(depositAmt, accountType, userName);
 			loggedIn();
 			break;
 
 		case "2":
-			System.out.println("What account would you like to withdraw from Checking/Savings?");
-			accountType = sc.nextLine();
+			accountType = CheckAccountType.checkAccountType();
 			if (us.accountApproved(Login.getLogin_name(), accountType) == true) {
-				System.out.println("How much would you like to withdraw?");
-				String withdrawAmt = sc.nextLine();
-				int withdraw = Integer.parseInt(withdrawAmt);
+				int withdraw = adminInputs.getNumber("withdrawal");
 				System.out.println("What username are you trying to withdraw from?");
 				String accountUser = sc.nextLine();
 				if (us.checkFunds(accountType, accountUser, withdraw) == true) {
@@ -60,14 +55,12 @@ public class AdminLoggedIn {
 			break;
 
 		case "3":
-			System.out.println("Which account are you transfering from Checking/Savings?");
-			accountType = sc.nextLine();
-			System.out.println("How much would you like to transfer?");
-			String transferAmt = sc.nextLine();
+			accountType = CheckAccountType.checkAccountType();
+			int transferAmt = adminInputs.getNumber("transfer");
 			System.out.println("What username are you trying to transfer funds from?");
 			String accountUser = sc.nextLine();
-			if (us.checkFunds(accountType, accountUser, Integer.parseInt(transferAmt)) == true) {
-				us.transfer(accountType, accountUser, Integer.parseInt(transferAmt));
+			if (us.checkFunds(accountType, accountUser, transferAmt) == true) {
+				us.transfer(accountType, accountUser, transferAmt);
 			}
 			loggedIn();
 			break;
