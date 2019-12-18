@@ -43,7 +43,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				System.out.println(e.toString());
 				list.add(e);
 			}
-			
+
 			rs.close();
 		} catch (SQLException e) {
 			logger.warn("Unable to retrieve all users", e);
@@ -70,7 +70,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				boolean is_employee = rs.getBoolean("is_employee");
 				boolean is_admin = rs.getBoolean("is_admin");
 				User u = new User(user_id, user_name, first_name, last_name, is_employee, is_admin);
-				
+
 				System.out.println(u.toString());
 				findAccountByUserId(user_id);
 				return u;
@@ -86,13 +86,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public boolean approveAccount(int user_id, String account_type) {
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			
+
 			// Isn't working yet
 			String sql = "Update accounts set account_approved = true where owner_id = " + user_id + ""
 					+ " and account_type = '" + account_type + "';";
 			Statement stmt = conn.createStatement();
 			stmt.execute(sql);
-			
+
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -112,7 +112,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					+ " and account_type = '" + account_type + "';";
 			Statement stmt = conn.createStatement();
 			stmt.execute(sql);
-			
+
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -130,24 +130,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			String sql = "Select * from accounts where owner_id = " + user_id + ";";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-
+			Account a = null;
 			while (rs.next()) {
-				
 				int account_id = rs.getInt("account_id");
 				int owner_id = rs.getInt("owner_id");
 				int account_balance = rs.getInt("account_balance");
 				String account_type = rs.getString("account_Type");
 				boolean account_approved = rs.getBoolean("account_approved");
-				Account a = new Account(account_id,owner_id,account_balance,account_type,account_approved);
+				 a = new Account(account_id,owner_id,account_balance,account_type,account_approved);
 				
 				System.out.println(a.toString());
 	
-				return a;
+				
 			}
-
+			return a;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+
 	}
 }

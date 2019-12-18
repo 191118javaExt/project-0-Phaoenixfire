@@ -82,7 +82,8 @@ public class EmployeeLoggedIn {
 		case "6":
 			System.out.println("What is the users Id number");
 			int user_id = Integer.parseInt(sc.nextLine());
-			es.approveAccount(user_id, sc.nextLine());
+			accountType = CheckAccountType.checkAccountType();
+			es.approveAccount(user_id, accountType);
 
 			loggedIn();
 			break;
@@ -90,7 +91,8 @@ public class EmployeeLoggedIn {
 		case "7":
 			System.out.println("What is the users Id number");
 			user_id = Integer.parseInt(sc.nextLine());
-			es.denyAccount(user_id, sc.nextLine());
+			accountType = CheckAccountType.checkAccountType();
+			es.denyAccount(user_id, accountType);
 
 			loggedIn();
 			break;

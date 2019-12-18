@@ -32,7 +32,7 @@ public class AdminLoggedIn {
 			String accountType = CheckAccountType.checkAccountType();
 			System.out.println("How much would you like to deposit?");
 			int depositAmt = adminInputs.getNumber("deposit");
-			System.out.println("What username are you trying to withdraw from?");
+			System.out.println("What username are you trying to deposit to1?");
 			String userName = sc.nextLine();
 			us.deposit(depositAmt, accountType, userName);
 			loggedIn();
@@ -78,8 +78,7 @@ public class AdminLoggedIn {
 		case "6":
 			System.out.println("What is the users Id number.");
 			int user_id = Integer.parseInt(sc.nextLine());
-			System.out.println("Which account do you want to approve Checking/Savings?");
-			accountType = sc.nextLine();
+			accountType = CheckAccountType.checkAccountType();
 			es.approveAccount(user_id, accountType);
 
 			loggedIn();
@@ -88,8 +87,7 @@ public class AdminLoggedIn {
 		case "7":
 			System.out.println("What is the users Id number");
 			user_id = Integer.parseInt(sc.nextLine());
-			System.out.println("Which account do you want to deny Checking/Savings?");
-			accountType = sc.nextLine();
+			accountType = CheckAccountType.checkAccountType();
 			es.denyAccount(user_id, accountType);
 
 			loggedIn();
